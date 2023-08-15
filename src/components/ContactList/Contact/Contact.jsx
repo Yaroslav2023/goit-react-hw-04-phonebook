@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import cl from './contact.module.css';
-import PropTypes from 'prop-types';
+import { Context } from '../../../context/contactContext';
 
-const Contact = ({ contacts, deleteContact }) => {
+const Contact = () => {
+  const { contacts, setContacts } = useContext(Context);
   return contacts.map(({ id, name, number }) => {
     return (
       <li key={id} className={cl.item}>
@@ -12,18 +13,13 @@ const Contact = ({ contacts, deleteContact }) => {
         <button
           type="button"
           className={cl.btn}
-          onClick={() => deleteContact(id)}
+          // onClick={() => deleteContact(id)}
         >
           Delete
         </button>
       </li>
     );
   });
-};
-
-Contact.propTypes = {
-  contacts: PropTypes.arrayOf(PropTypes.object).isRequired,
-  deleteContact: PropTypes.func.isRequired,
 };
 
 export default Contact;

@@ -1,19 +1,13 @@
 import React from 'react';
 import cl from './contactList.module.css';
 import Contact from './Contact';
-import PropTypes from 'prop-types';
 
-const ContactList = ({ contacts, deleteContact }) => {
+const ContactList = () => {
   return (
     <ul className={cl.list}>
-      <Contact contacts={contacts} deleteContact={deleteContact} />
+      <Contact />
     </ul>
   );
-};
-
-ContactList.propTypes = {
-  contacts: PropTypes.arrayOf(PropTypes.object).isRequired,
-  deleteContact: PropTypes.func.isRequired,
 };
 
 export default ContactList;

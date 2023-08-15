@@ -1,19 +1,22 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useContext } from 'react';
+import { Context } from 'context/contactContext';
 
-const Filter = ({ value, onChange }) => {
+const Filter = () => {
+  const { contacts, filter, setFilter } = useContext(Context);
+
   return (
     <label>
       Find contacts by name:
       <br />
-      <input type="text" value={value} onChange={onChange} />
+      <input
+        type="text"
+        value={filter}
+        onChange={e => {
+          setFilter(e.currentTarget.value);
+        }}
+      />
     </label>
   );
-};
-
-Filter.propTypes = {
-  value: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
 };
 
 export default Filter;
