@@ -2,7 +2,11 @@ import React, { useContext } from 'react';
 import { Context } from 'context/contactContext';
 
 const Filter = () => {
-  const { contacts, filter, setFilter } = useContext(Context);
+  const { filter, setFilter } = useContext(Context);
+
+  const filteredContacts = ({ target }) => {
+    setFilter(target.value);
+  };
 
   return (
     <label>
@@ -10,10 +14,9 @@ const Filter = () => {
       <br />
       <input
         type="text"
+        placeholder="Find..."
         value={filter}
-        onChange={e => {
-          setFilter(e.currentTarget.value);
-        }}
+        onChange={filteredContacts}
       />
     </label>
   );

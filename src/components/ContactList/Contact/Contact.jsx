@@ -3,8 +3,13 @@ import cl from './contact.module.css';
 import { Context } from '../../../context/contactContext';
 
 const Contact = () => {
-  const { contacts, setContacts } = useContext(Context);
-  return contacts.map(({ id, name, number }) => {
+  const { contacts, setContacts, findContacts } = useContext(Context);
+
+  const deleteContact = contactId => {
+    setContacts(contacts.filter(contact => contact.id !== contactId));
+  };
+
+  return findContacts.map(({ id, name, number }) => {
     return (
       <li key={id} className={cl.item}>
         <span>
@@ -13,7 +18,7 @@ const Contact = () => {
         <button
           type="button"
           className={cl.btn}
-          // onClick={() => deleteContact(id)}
+          onClick={() => deleteContact(id)}
         >
           Delete
         </button>

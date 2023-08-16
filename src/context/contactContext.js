@@ -1,4 +1,4 @@
-import { createContext, useState } from 'react';
+import { createContext, useState, useEffect, useMemo } from 'react';
 
 export const Context = createContext();
 
@@ -13,30 +13,22 @@ export function GlobalContext({ children }) {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
-  const filteredContacts = () => {
-    const normalizedFilter = filter.toLowerCase();
+  useEffect(() => {
+    const savedContacts = JSON.parse(localStorage.getItem('contacts'));
+    if (savedContacts) {
+      setContacts(savedContacts);
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('contacts', JSON.stringify(contacts));
+  }, [contacts]);
+
+  const findContacts = useMemo(() => {
     return contacts.filter(contact =>
-      contact.name.toLowerCase().includes(normalizedFilter)
+      contact.name.toLowerCase().includes(filter.toLowerCase())
     );
-  };
-
-  // const deleteContact = contactId => {
-  //   setContacts(prevState => {
-  //     prevState.filter(contact => contact.id !== contactId);
-  //   });
-  // };
-
-  // const handleGood = () => {
-  //   setGood(state => state + 1);
-  // };
-
-  // const handleNeutral = () => {
-  //   setNeutral(state => state + 1);
-  // };
-
-  // const handleBad = () => {
-  //   setBad(state => state + 1);
-  // };
+  }, [filter, contacts]);
 
   return (
     <Context.Provider
@@ -49,7 +41,7 @@ export function GlobalContext({ children }) {
         setName,
         number,
         setNumber,
-        filteredContacts,
+        findContacts,
       }}
     >
       {children}
